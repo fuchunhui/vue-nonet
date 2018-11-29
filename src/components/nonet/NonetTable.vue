@@ -1,6 +1,6 @@
 <template>
     <div class="nonet">
-        看的见我吧
+        
     </div>
 </template>
 
@@ -26,6 +26,8 @@ export default {
 
 <style lang="less">
 .nonet {
-    background-color: green; 
+    width: 100%;
+    height: 400px;
+    background-color: #f2f2f2;
 }
 </style>

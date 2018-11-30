@@ -1,6 +1,7 @@
 <template>
     <div class="nonet">
         <p>这是一段测试文字</p>
+        <veui-input ui="tiny"></veui-input>
     </div>
 </template>
 

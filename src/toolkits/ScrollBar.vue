@@ -5,39 +5,50 @@
 </template>
 
 <script>
-import PS from 'perfect-scrollbar';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 export default {
     name: 'ScrollBar',
+
     props: {
         initParams: {
             type: Object,
             default: function () {
                 return {
-                    handlers: ['click-rail', 'drag-scrollbar', 'keyboard', 'wheel'],
+                    handlers: ['click-rail', 'drag-thumb', 'keyboard', 'wheel'],
                     maxScrollbarLength: null,
                     minScrollbarLength: 20,
                     scrollXMarginOffset: 5,
                     scrollYMarginOffset: 5,
-                    stopPropagationOnClick: true,
-                    suppressScrollX: this.suppressScrollX || false,
+                    suppressScrollX: false,
                     suppressScrollY: false,
-                    swipePropagation: true,
                     useBothWheelAxes: false,
                     wheelPropagation: false,
-                    wheelSpeed: 1,
-                    theme: 'default'
+                    wheelSpeed: 1
                 };
             }
         }
     },
-    mounted() {
-        PS.initialize(this.$el, this.initParams);
+
+    data() {
+        return {
+            ps: null
+        };
     },
+    
     methods: {
         update() {
-            PS.update(this.$el);
+            this.ps.update();
         }
+    },
+
+    mounted() {
+        this.ps =  new PerfectScrollbar(this.$el, this.initParams);
+    },
+
+    beforeDestory() {
+        this.ps.destroy();
+        this.ps = null;
     }
 };
 </script>

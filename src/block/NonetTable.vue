@@ -1,7 +1,7 @@
 <template>
     <div class="nonet-table">
         <nonet-setting v-bind.sync="common"></nonet-setting>
-        <nonet ui="tiny"></nonet>
+        <nonet v-bind="common" ui="tiny"></nonet>
     </div>
 </template>
 

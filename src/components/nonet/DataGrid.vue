@@ -1,6 +1,19 @@
 <template>
     <div class="data-grid">
-        看的见我吧
+        <span
+            v-for="(item, index) in list"
+            :key="index | realKey(nonet)"
+            :title="item.value | negative(item)"
+            :style="{
+                width: `${width}px`,
+                height: `${height}px`,
+                lineHeight: `${height}px`,
+                color: item.color,
+                background: item.backgroundColor
+            }"
+            class="data-grid-cell">
+            {{ pointer ? (index | realKey(nonet)) : item.value }}
+        </span>
     </div>
 </template>
 
@@ -9,21 +22,75 @@ export default {
     name: 'DataGrid',
 
     props: {
-
-    },
-
-    data() {
-        return {
-
+        nonet: {
+            type: Object,
+            default: () => {
+                return {};
+            }
+        },
+        width: {
+            type: Number,
+            default: 0,
+            required: true
+        },
+        height: {
+            type: Number,
+            default: 0,
+            required: true
+        },
+        pointer: {
+            type: Boolean,
+            default: true
         }
     },
 
-    methods: {
+    data() {
+        return {};
+    },
 
+    filters: {
+        realKey(value, nonet) {
+            let {x, y, col} = nonet;
+            let xc = value % col;
+            let realX = x + xc + 1;
+            let realY = y + (value - xc) / col + 1;
+            return `${realX}, ${realY}`;
+        }
+    },
+
+    computed: {
+        list() {
+            let {col, row} = this.nonet;
+            let list = new Array(col * row);
+            list.fill(Math.floor(Math.random() * 100));
+            list.forEach(item => {
+                item.value = item;
+                item.color = '#BCBCBC';
+                item.backgroundColor = '#556677';
+            });
+            return list;
+        }
     }
-}
+};
 </script>
 
 <style lang="less">
-
+.data-grid {
+    position: absolute;
+    border-right: 1px solid #DDDEE4;
+    overflow: hidden;
+    &-cell {
+        position: relative;
+        float: left;
+        border-left: 1px solid #DDDEE4;
+        border-bottom: 1px solid #DDDEE4;
+        padding: 0 2px;
+        font-size: 12px;
+        text-align: center;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        cursor: default;
+    }
+}
 </style>

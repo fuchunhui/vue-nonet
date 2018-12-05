@@ -3,7 +3,6 @@
         <span
             v-for="(item, index) in list"
             :key="index | realKey(nonet)"
-            :title="item.value | negative(item)"
             :style="{
                 width: `${width}px`,
                 height: `${height}px`,
@@ -61,13 +60,14 @@ export default {
     computed: {
         list() {
             let {col, row} = this.nonet;
-            let list = new Array(col * row);
-            list.fill(Math.floor(Math.random() * 100));
-            list.forEach(item => {
-                item.value = item;
-                item.color = '#BCBCBC';
-                item.backgroundColor = '#556677';
-            });
+            let list = [];
+            for(let i in col * row) {
+                list.push({
+                    value: Math.floor(Math.random() * 100),
+                    color: '#BCBCBC',
+                    backgroundColor: '#556677'
+                });
+            }
             return list;
         }
     }

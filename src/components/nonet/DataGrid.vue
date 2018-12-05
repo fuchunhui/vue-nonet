@@ -11,7 +11,7 @@
                 background: item.backgroundColor
             }"
             class="data-grid-cell">
-            {{ pointer ? (index | realKey(nonet)) : item.value }}
+            {{ index | realKey(nonet) }}
         </span>
     </div>
 </template>
@@ -61,11 +61,11 @@ export default {
         list() {
             let {col, row} = this.nonet;
             let list = [];
-            for(let i in col * row) {
+            for(let i = 0; i < col * row; i++) {
                 list.push({
                     value: Math.floor(Math.random() * 100),
                     color: '#BCBCBC',
-                    backgroundColor: '#556677'
+                    backgroundColor: '#FFFFFF'
                 });
             }
             return list;

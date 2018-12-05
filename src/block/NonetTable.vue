@@ -24,7 +24,7 @@ export default {
     data() {
         return {
             common: {
-                width: 1020,
+                width: 100,
                 height: 30,
                 columnNum: 10000,
                 rowNum: 20000,

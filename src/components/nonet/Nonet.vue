@@ -34,18 +34,19 @@
 -->
 
 <template>
-    <div ref="Olap" class="olap-table">
+    <div ref="Olap" class="nonet-table">
         <scroll-bar
-            ref="olapData"
+            ref="nonetData"
             v-veui-resize="resize"
             v-scroll="onDataScroll"
-            class="olap-view">
+            class="nonet-view">
             <div
-                ref="olapLayout"
-                :style="{width: totalWidth + 'px', height: totalHeight + 'px'}"
-                class="olap-layout"/>
+                :style="{
+                    width: `${totalWidth}px`,
+                    height: `${totalHeight}px`
+                }"
+                class="nonet-layout"/>
             <data-grid
-                ref="olapNonet"
                 :nonet="nonet"
                 :width="width"
                 :height="height"
@@ -55,10 +56,9 @@
                     height: nonetRows * height + 'px',
                     top: nonetY * height + 'px',
                     left: nonetX * width + 'px',
-                    maxWidth: width + 1 + 'px',
-                    maxHeight: height + 'px'
-                }"
-                class="olap-nonet"/>
+                    maxWidth: totalWidth + 1 + 'px',
+                    maxHeight: totalHeight + 'px'
+            }"/>
         </scroll-bar>
     </div>
 </template>
@@ -118,7 +118,7 @@ export default {
             nonetRows: 0,           // 九宫格行数，与height的积，即为九宫格的宽度
             isScrolling: false,
             resetNonet: false,
-            resetScroll: false,
+            resetScroll: true,
             alreadyDeal: true
         };
     },
@@ -213,7 +213,7 @@ export default {
          * 目前此函数无调用
          */
         computeRegionSize() {
-            this.computeRanks(this.$refs.olapData.$el);
+            this.computeRanks(this.$refs.nonetData.$el);
             this.computeNonetRanks();
         },
         /**
@@ -266,31 +266,33 @@ export default {
             }
         },
         /**
-         * 获取数据区域大小
-         *
-         * 重置起点坐标，滚动条位置操作：
-         * 1.查询和自动查询
-         * 2.Drill_Replace的下钻和上卷（手动click）
-         *
-         * 始终要记得，是哪个因子变化导致的，就重点检测变化的因子
+         * 获取数据区域大小，重置起点坐标，滚动条位置操作
          */
-        renderOlapGrid() {
+        renderNonetGrid() {
             if (this.resetScroll) {
                 this.resetData();
                 this.computeInitRegionSize();
             }
         },
+
+        resizeRegionSize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                this.renderRegionOlapGrid();
+            }, 300);
+        },
+
         /**
          * 不改变滚动条位置渲染数据内容
          */
         renderRegionOlapGrid() {
-            let olapData = this.$refs.olapData;
-            if (!olapData) {
+            let nonetData = this.$refs.nonetData;
+            if (!nonetData) {
                 return;
             }
-            olapData.update();
+            nonetData.update();
 
-            let ode = olapData.$el;
+            let ode = nonetData.$el;
             this.computePointer(ode);
             this.computeRanks(ode);
             this.resetNonet = true;
@@ -312,6 +314,7 @@ export default {
                 this.dynamicData();
             }, 100);
         },
+
         /**
          * 请求数据
          * x y 起点坐标
@@ -321,6 +324,26 @@ export default {
             this.alreadyDeal = false;
             console.log('开始获取数据，范围为：', {...this.nonet});
         },
+        
+        dealData() {
+            if (this.alreadyDeal) {
+                return false;
+            }
+            this.$nextTick(function () {
+                let ode = this.$refs.nonetData.$el;
+                if (this.resetScroll && !this.isScrolling) {
+                    this.computeRanks(ode);
+                    this.checkNonetRanks();
+                }
+
+                this.$refs.nonetData.update();
+
+                this.isScrolling = false;
+                this.resetScroll = false;
+                this.alreadyDeal = true;
+            });
+        },
+
         resetData() {
             this.isScrolling = false;
             this.x = 0;
@@ -332,48 +355,22 @@ export default {
             this.nonetCols = 0;
             this.nonetRows = 0;
             this.alreadyDeal = true;
-            let od = this.$refs.olapData;
+            let od = this.$refs.nonetData;
             if (od) {
                 od.$el.scrollTop = 0;
                 od.$el.scrollLeft = 0;
                 od.update();
             }
         },
-        
-        resizeRegionSize() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                this.renderRegionOlapGrid();
-            }, 300);
-        },
-        resize() {
 
-        },
-        dealData() {
-            if (this.alreadyDeal) {
-                return false;
-            }
-            this.$nextTick(function () {
-                let ode = this.$refs.olapData.$el;
-                if (this.resetScroll && !this.isScrolling) {
-                    this.computeRanks(ode);
-                    this.checkNonetRanks();
-                }
-
-                this.$refs.olapData.update();
-
-                this.isScrolling = false;
-                this.resetScroll = false;
-                this.alreadyDeal = true;
-            });
-        }
+        resize() {},
     },
     watch: {
         'view.stage': {
             handler: function (value) {
                 // console.log('view.stage: ', value);
                 if (value === VIEW_STAGE.GET_TITLE) {
-                    this.renderOlapGrid();
+                    this.renderNonetGrid();
                 } else if (value === VIEW_STAGE.LOAD_TITLE) {
                     if (!this.isScrolling) {
                         this.dynamicData();
@@ -397,7 +394,7 @@ export default {
         }
     },
     mounted() {
-
+        this.renderNonetGrid();
     }
 };
 </script>
@@ -405,21 +402,21 @@ export default {
 <style lang="less">
 @import (reference) url('../../assets/css/variable.less');
 
-.olap-table {
+.nonet-table {
     width: 100%;
     height: 100%;
     overflow: hidden;
     background-color: #FFFFFF;
     padding: 10px;
 
-    .olap-view {
+    .nonet-view {
         height: 100%;
         border: 1px solid rgb(75, 89, 167);
         overflow: hidden;
         position: relative;
-        .olap-nonet {
-            position: absolute;
-        }
+        // .olap-nonet {
+        //     position: absolute;
+        // }
     }
 }
 </style>

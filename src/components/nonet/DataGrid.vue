@@ -11,7 +11,12 @@
                 background: item.backgroundColor
             }"
             class="data-grid-cell">
-            {{ index | realKey(nonet) }}
+            <template v-if="pointer">
+                {{ index | realKey(nonet) }}
+            </template>
+            <template v-else>
+                {{ item.value }}
+            </template>
         </span>
     </div>
 </template>

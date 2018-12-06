@@ -34,7 +34,7 @@
 -->
 
 <template>
-    <div ref="Olap" class="nonet">
+    <div ref="nonet" class="nonet">
         <scroll-bar
             ref="nonetData"
             v-veui-resize="resize"
@@ -120,7 +120,6 @@ export default {
             isScrolling: false,
             resetNonet: false,
             resetScroll: true,
-            alreadyDeal: true,
             rankList: []
         };
     },
@@ -157,7 +156,7 @@ export default {
         /**
          * 计算九宫格横向或者纵向的坐标格子数
          * @param  {[Number]} count     [可视区域坐标格子数]
-         * @param  {[Number]} rankCount [olap最大的行数或者列数]
+         * @param  {[Number]} rankCount [nonet最大的行数或者列数]
          * @return {[Number]}           [横向或者纵向的坐标格子数]
          */
         computeNonetCount(count, rankCount) {
@@ -167,7 +166,7 @@ export default {
          * 计算nonet的起点坐标位置
          * @param  {[Number]} scrollPoint [可视区坐标点]
          * @param  {[Number]} nonetCount  [九宫格包含的坐标单元数]
-         * @param  {[Number]} rankCount   [olap最大的行数或者列数]
+         * @param  {[Number]} rankCount   [nonet最大的行数或者列数]
          * @return {[Number]}             [新的坐标位置]
          *
          * 优化点： 当前的坐标在左上角的宫内，也可以在中间，坐标就再减去一个三分之一
@@ -203,7 +202,7 @@ export default {
          * 保证初始化区域比真正的九宫格区域大一些，不影响后续的逻辑判断，不用考虑特殊情况
          */
         computeInitRegionSize() {
-            this.computeRanks(this.$refs.Olap);
+            this.computeRanks(this.$refs.nonet);
             this.nonetCols = this.unitNonetCount(this.xCols) * 3;
             this.nonetRows = this.unitNonetCount(this.yRows) * 3;
             // console.log('this.nonetCols: ', this.nonetCols);
@@ -280,14 +279,14 @@ export default {
         resizeRegionSize() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                this.renderRegionOlapGrid();
+                this.renderRegionNonetGrid();
             }, 300);
         },
 
         /**
          * 不改变滚动条位置渲染数据内容
          */
-        renderRegionOlapGrid() {
+        renderRegionNonetGrid() {
             let nonetData = this.$refs.nonetData;
             if (!nonetData) {
                 return;
@@ -323,29 +322,26 @@ export default {
          * row col 行数和列数
          */
         dynamicData() {
-            this.alreadyDeal = false;
-            console.log('开始获取数据，范围为：', {...this.nonet});
+            // console.log('开始获取数据，范围为：', {...this.nonet});
             let {col, row} = this.nonet;
             let list = new Array(col * row);
             this.rankList = list.fill('1');
+
+            setTimeout(() => {
+                this.dealData();
+            }, 100);
         },
         
         dealData() {
-            if (this.alreadyDeal) {
-                return false;
-            }
             this.$nextTick(function () {
                 let ode = this.$refs.nonetData.$el;
                 if (this.resetScroll && !this.isScrolling) {
                     this.computeRanks(ode);
                     this.checkNonetRanks();
                 }
-
                 this.$refs.nonetData.update();
-
                 this.isScrolling = false;
                 this.resetScroll = false;
-                this.alreadyDeal = true;
             });
         },
 
@@ -359,7 +355,6 @@ export default {
             this.nonetY = 0;
             this.nonetCols = 0;
             this.nonetRows = 0;
-            this.alreadyDeal = true;
             let od = this.$refs.nonetData;
             if (od) {
                 od.$el.scrollTop = 0;
@@ -371,26 +366,12 @@ export default {
         resize() {},
     },
     watch: {
-        'view.stage': {
-            handler: function (value) {
-                // console.log('view.stage: ', value);
-                if (value === VIEW_STAGE.GET_TITLE) {
-                    this.renderNonetGrid();
-                } else if (value === VIEW_STAGE.LOAD_TITLE) {
-                    if (!this.isScrolling) {
-                        this.dynamicData();
-                    }
-                } else if (value === VIEW_STAGE.DEAL_TITLE) {
-                    this.dealData();
-                }
-            }
-        },
-        width(val) {
+        width() {
             this.$nextTick(function () {
                 this.resizeRegionSize();
             });
         },
-        height(val) {
+        height() {
             this.$nextTick(function () {
                 this.resizeRegionSize();
             });
@@ -399,7 +380,6 @@ export default {
     mounted() {
         this.renderNonetGrid();
         this.dynamicData();
-        // setTimeout();
     }
 };
 </script>
@@ -419,9 +399,6 @@ export default {
         border: 1px solid rgb(75, 89, 167);
         overflow: hidden;
         position: relative;
-        // .olap-nonet {
-        //     position: absolute;
-        // }
     }
 }
 </style>

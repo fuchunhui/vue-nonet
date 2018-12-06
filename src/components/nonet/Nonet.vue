@@ -51,6 +51,7 @@
                 :width="width"
                 :height="height"
                 :pointer="pointer"
+                :list="rankList"
                 :style="{
                     width: nonetCols * width + 1 + 'px',
                     height: nonetRows * height + 'px',
@@ -119,7 +120,8 @@ export default {
             isScrolling: false,
             resetNonet: false,
             resetScroll: true,
-            alreadyDeal: true
+            alreadyDeal: true,
+            rankList: []
         };
     },
     computed: {
@@ -323,6 +325,9 @@ export default {
         dynamicData() {
             this.alreadyDeal = false;
             console.log('开始获取数据，范围为：', {...this.nonet});
+            let {col, row} = this.nonet;
+            let list = new Array(col * row);
+            this.rankList = list.fill('1');
         },
         
         dealData() {
@@ -381,13 +386,11 @@ export default {
             }
         },
         width(val) {
-            console.log('nonet width: ', val);
             this.$nextTick(function () {
                 this.resizeRegionSize();
             });
         },
         height(val) {
-            console.log('nonet height: ', val);
             this.$nextTick(function () {
                 this.resizeRegionSize();
             });
@@ -395,6 +398,8 @@ export default {
     },
     mounted() {
         this.renderNonetGrid();
+        this.dynamicData();
+        // setTimeout();
     }
 };
 </script>

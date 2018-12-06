@@ -1,7 +1,7 @@
 <template>
     <div class="data-grid">
         <span
-            v-for="(item, index) in list"
+            v-for="(item, index) in realList"
             :key="index | realKey(nonet)"
             :style="{
                 width: `${width}px`,
@@ -45,6 +45,10 @@ export default {
         pointer: {
             type: Boolean,
             default: true
+        },
+        list: {
+            type: Array,
+            default: () => []
         }
     },
 
@@ -63,17 +67,16 @@ export default {
     },
 
     computed: {
-        list() {
-            let {col, row} = this.nonet;
-            let list = [];
-            for(let i = 0; i < col * row; i++) {
-                list.push({
+        realList() {
+            let result = [];
+            this.list.forEach(item => {
+                result.push({
                     value: Math.floor(Math.random() * 100),
                     color: '#BCBCBC',
                     backgroundColor: '#FFFFFF'
                 });
-            }
-            return list;
+            });
+            return result;
         }
     }
 };

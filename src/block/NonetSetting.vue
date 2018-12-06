@@ -1,10 +1,10 @@
 <template>
     <veui-form class="nonet-setting" ui="inline">
         <veui-field label="宽度">
-            <nonet-input :value.sync="localWidth" :min="60" placeholder="输入单元格的宽度值" />
+            <nonet-input :value.sync="localWidth" :min="60" placeholder="最小60px" />
         </veui-field>
         <veui-field label="高度">
-            <nonet-input :value.sync="localHeight" :min="30" placeholder="输入单元格的高度值" />
+            <nonet-input :value.sync="localHeight" :min="30" placeholder="最小30px" />
         </veui-field>
         <veui-field label="列数">
             <nonet-input :value.sync="localColumnNum" placeholder="显示的列数" />

@@ -45,7 +45,7 @@ export default {
     display: flex;
     flex-direction: column;
     .nonet-setting {
-        height: 40px;
+        height: 36px;
         padding-left: 20px;
     }
     .nonet {

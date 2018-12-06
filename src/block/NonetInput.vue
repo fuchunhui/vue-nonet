@@ -3,6 +3,7 @@
         :min="min"
         v-model="localValue"
         type="number"
+        :placeholder="placeholder"
         @keyup.enter="enterValue($event)"
         @blur="inputValue"
         class="nonet-input"/>
@@ -41,8 +42,14 @@ export default {
         enterValue(event) {
             event.target.blur();
         },
-        inputValue() {
-            this.$emit('update:value', Number(this.localValue));
+        inputValue(event) {
+            if (!event.target.validity.valid || event.target.value === '') {
+                event.target.value = this.value;
+            }
+            let targetValue = Number(event.target.value);
+            if (targetValue !== this.value) {
+                this.$emit('update:value', targetValue);
+            }
         }
     }
 }

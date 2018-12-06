@@ -34,7 +34,7 @@
 -->
 
 <template>
-    <div ref="Olap" class="nonet-table">
+    <div ref="Olap" class="nonet">
         <scroll-bar
             ref="nonetData"
             v-veui-resize="resize"
@@ -407,7 +407,7 @@ export default {
 <style lang="less">
 @import (reference) url('../../assets/css/variable.less');
 
-.nonet-table {
+.nonet {
     width: 100%;
     height: 100%;
     overflow: hidden;

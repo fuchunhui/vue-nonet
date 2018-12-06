@@ -3,6 +3,7 @@ const lessOptions = {
 }
 
 module.exports = {
+    baseUrl: process.env.NODE_ENV === 'production' ? '/vue-nonet/' : '/',
     devServer: {
         port: 8020
     },
@@ -43,4 +44,5 @@ module.exports = {
                 .tap(options => Object.assign({}, options, lessOptions))
         })
     }
+
 };

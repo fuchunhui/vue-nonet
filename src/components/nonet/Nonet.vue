@@ -61,11 +61,23 @@
                     maxHeight: totalHeight + 'px'
             }"/>
         </scroll-bar>
+        <template v-if="thumbnail">
+            <thumbnail
+                class="nonet-thumbnail"
+                :view="view"
+                :nonet="nonet"
+                :total="{
+                    col: columnNum,
+                    row: rowNum
+                }">
+            </thumbnail>
+        </template>
     </div>
 </template>
 
 <script>
 import DataGrid from './DataGrid';
+import Thumbnail from './Thumbnail';
 import ScrollBar from '../../toolkits/ScrollBar';
 
 let dataTimer;
@@ -75,7 +87,8 @@ export default {
     name: 'Nonet',
     components: {
         DataGrid,
-        ScrollBar
+        ScrollBar,
+        Thumbnail
     },
     props: {
         width: {
@@ -136,6 +149,14 @@ export default {
                 y: this.nonetY,
                 col: this.nonetCols,
                 row: this.nonetRows
+            };
+        },
+        view() {
+            return {
+                x: this.x,
+                y: this.y,
+                col: this.xCols,
+                row: this.yRows
             };
         }
     },
@@ -390,15 +411,22 @@ export default {
 .nonet {
     width: 100%;
     height: 100%;
+    position: relative;
     overflow: hidden;
     background-color: #FFFFFF;
     padding: 10px;
-
-    .nonet-view {
+    
+    &-view {
         height: 100%;
         border: 1px solid rgb(75, 89, 167);
         overflow: hidden;
         position: relative;
+    }
+
+    &-thumbnail {
+        position: absolute;
+        top: 10px;
+        right: 10px;
     }
 }
 </style>

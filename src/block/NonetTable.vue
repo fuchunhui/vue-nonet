@@ -29,7 +29,7 @@ export default {
                 columnNum: 10000,
                 rowNum: 20000,
                 pointer: true,
-                thumbnail: false
+                thumbnail: true
             }
         }
     },
@@ -52,67 +52,5 @@ export default {
         flex: 1;
     }
     background-color: #f2f2f2;
-}
-.nonet1-table {
-    ::-webkit-scrollbar {
-        height: 10px;
-        width: 10px;
-        overflow: visible;
-    }
-
-    ::-webkit-scrollbar-button {
-        height: 0;
-        width: 0
-    }
-
-    ::-webkit-scrollbar-track {
-        background-clip: padding-box;
-        border: solid transparent;
-        border-width: 0
-    }
-
-    ::-webkit-scrollbar-track:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-        box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.1)
-    }
-
-    ::-webkit-scrollbar-track:active {
-        background-color: rgba(0, 0, 0, 0.05);
-        box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.14),inset -1px 0 0 rgba(0, 0, 0, 0.07)
-    }
-
-    ::-webkit-scrollbar-track:horizontal {
-        border-width: 0
-    }
-
-    ::-webkit-scrollbar-track:horizontal:hover {
-        box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1)
-    }
-
-    ::-webkit-scrollbar-track:horizontal:active {
-        box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.14), inset 0 -1px 0 rgba(0, 0, 0, 0.07)
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.2);
-        min-height: 28px;
-        padding: 20px 0 0;
-        box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.07)
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(0, 0, 0, 0.4);
-        box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25)
-    }
-
-    ::-webkit-scrollbar-thumb:horizontal {
-        border-width: 6px 1px 1px;
-        padding: 0 0 0 100px;
-        box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1),inset -1px 0 0 rgba(0, 0, 0, 0.07)
-    }
-
-    ::-webkit-scrollbar-corner {
-        background: transparent
-    }
 }
 </style>

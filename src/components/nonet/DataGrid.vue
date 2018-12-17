@@ -72,7 +72,7 @@ export default {
             this.list.forEach(item => {
                 result.push({
                     value: Math.floor(Math.random() * 100),
-                    color: '#BCBCBC',
+                    color: '#3AF78A',
                     backgroundColor: '#FFFFFF'
                 });
             });

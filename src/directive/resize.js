@@ -46,7 +46,7 @@ function attach(el, {value, oldValue, modifiers}) {
         : options.handler;
 
     if (!oldValue) {
-        el._hulkResizeHandler = cb;
+        el._resizeHandler = cb;
         erd.listenTo(el, cb);
     } else {
         let oldOptions = {
@@ -62,16 +62,16 @@ function attach(el, {value, oldValue, modifiers}) {
 
         let changed = isEqual(oldValue, options);
         if (changed) {
-            let oldCb = el._hulkResizeHandler;
+            let oldCb = el._resizeHandler;
             erd.removeListener(el, oldCb);
-            el._hulkResizeHandler = cb;
+            el._resizeHandler = cb;
             erd.listenTo(el, cb);
         }
     }
 }
 
 function clear(el) {
-    erd.removeListener(el, el._hulkResizeHandler);
+    erd.removeListener(el, el._resizeHandler);
 }
 
 Vue.directive('resize', {

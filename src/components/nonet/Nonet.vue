@@ -384,7 +384,7 @@ export default {
             }
         },
 
-        resize() {},
+        resize() {}
     },
     watch: {
         width() {

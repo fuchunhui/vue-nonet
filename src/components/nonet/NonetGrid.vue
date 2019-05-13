@@ -1,29 +1,29 @@
 <template>
-    <div class="data-grid">
-        <span
-            v-for="(item, index) in realList"
-            :key="index | realKey(nonet)"
-            :style="{
-                width: `${width}px`,
-                height: `${height}px`,
-                lineHeight: `${height}px`,
-                color: item.color,
-                background: item.backgroundColor
-            }"
-            class="data-grid-cell">
-            <template v-if="pointer">
-                {{ index | realKey(nonet) }}
-            </template>
-            <template v-else>
-                {{ item.value }}
-            </template>
-        </span>
+    <div class="nonet-grid">
+        <slot>
+            <span
+                v-for="(item, index) in list"
+                :key="index | realKey(nonet)"
+                :style="{
+                    width: `${width}px`,
+                    height: `${height}px`,
+                    lineHeight: `${height}px`
+                }"
+                class="nonet-grid-cell">
+                <template v-if="pointer">
+                    {{ index | realKey(nonet) | bothValue(item.value)}}
+                </template>
+                <template v-else>
+                    {{ item.value }}
+                </template>
+            </span>
+        </slot>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'DataGrid',
+    name: 'NonetGrid',
 
     props: {
         nonet: {
@@ -44,7 +44,7 @@ export default {
         },
         pointer: {
             type: Boolean,
-            default: true
+            default: false
         },
         list: {
             type: Array,
@@ -59,31 +59,23 @@ export default {
     filters: {
         realKey(value, nonet) {
             let {x, y, col} = nonet;
+            if (col === 0) {
+                return `key${value}`;
+            }
             let xc = value % col;
             let realX = x + xc + 1;
             let realY = y + (value - xc) / col + 1;
             return `${realX}, ${realY}`;
-        }
-    },
-
-    computed: {
-        realList() {
-            let result = [];
-            this.list.forEach(item => {
-                result.push({
-                    value: Math.floor(Math.random() * 100),
-                    color: '#3AF78A',
-                    backgroundColor: '#FFFFFF'
-                });
-            });
-            return result;
+        },
+        bothValue(value, realValue) {
+            return `${value} (${realValue})`;
         }
     }
 };
 </script>
 
 <style lang="less">
-.data-grid {
+.nonet-grid {
     position: absolute;
     border-right: 1px solid #DDDEE4;
     overflow: hidden;

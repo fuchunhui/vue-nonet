@@ -278,7 +278,7 @@ export default {
                     this.emitScroll(option);
                 }, this.delay);
             }
-            this.$emit('update:view', this.view);
+            this.$emit('viewChange', this.view);
         },
         emitScroll(option) {
             let {scrollTop, scrollLeft} = option;

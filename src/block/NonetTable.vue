@@ -7,7 +7,7 @@
             :reset.sync="reset"
             :scrollTop.sync="scrollTop"
             :scrollLeft.sync="scrollLeft"
-            :view.sync="view"
+            @viewChange="viewChange"
             @nonetChange="nonetChange">
         </nonet>
         <template v-if="thumbnail">
@@ -84,6 +84,9 @@ export default {
     },
 
     methods: {
+        viewChange(view) {
+            this.view = view;
+        },
         nonetChange({nonet, stage}) {
             this.nonet = nonet;
             this.getNonetData(stage);
@@ -124,6 +127,7 @@ export default {
         padding-left: 20px;
     }
     .nonet {
+        width: unset;
         flex: 1;
         background-color: #FFFFFF;
         border: 1px solid rgb(75, 89, 167);

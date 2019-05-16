@@ -131,7 +131,7 @@ export default {
         flex: 1;
         background-color: #FFFFFF;
         border: 1px solid rgb(75, 89, 167);
-        margin: 10px;
+        margin: 5px 10px 10px;
     }
     &-thumbnail {
         position: absolute;

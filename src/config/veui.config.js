@@ -14,6 +14,8 @@ import {
     Form,
     Field,
     Label,
+    Tabs,
+    Tab,
     Icon as VIcon
 } from 'veui';
 
@@ -28,6 +30,9 @@ Vue.component('veui-checkbox', Checkbox);
 Vue.component('veui-form', Form);
 Vue.component('veui-label', Label);
 Vue.component('veui-field', Field);
+Vue.component('veui-field', Field);
+Vue.component('veui-tabs', Tabs);
+Vue.component('veui-tab', Tab);
 
 Vue.directive('veui-resize', resize);
 Vue.prototype.$toast = toast;

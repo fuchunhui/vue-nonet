@@ -62,7 +62,7 @@
                         maxWidth: totalWidth + 1 + 'px',
                         maxHeight: totalHeight + 'px'
                 }">
-                    <slot></slot>
+                    <slot :nonet="nonet"></slot>
                 </nonet-grid>
             </slot>
         </scroll-bar>
@@ -466,11 +466,12 @@ export default {
             }
         },
         dynamicData(stage) {
-            clearTimeout(dataTimer);
             this.isScrolling = true;
-            dataTimer = setTimeout(() => {
-                this.nonetChange(stage);
-            }, 100);
+            this.nonetChange(stage);
+            // clearTimeout(dataTimer);
+            // dataTimer = setTimeout(() => {
+            //     this.nonetChange(stage);
+            // }, 100);
         },
 
         dealData() {

@@ -146,14 +146,15 @@ export default {
                 row: 0
             },
             fixedHeight: 32,
-            viewList: []
+            viewList: [],
+            stage: ''
         };
     },
 
     computed: {
         list() {
             let list = [];
-            this.viewList.forEach(item => {
+            this.viewList.forEach(() => {
                 list.push({
                     value: Math.floor(Math.random(100) * 100),
                     backgroundColor: '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16)
@@ -163,7 +164,7 @@ export default {
         },
         columnList() {
             let list = new Array(this.nonet.col).fill('0');
-            list = list.map(item => {
+            list = list.map(() => {
                 return {
                     value: Math.random().toString(36).substr(8).toUpperCase(),
                     width: this.cellWidth,
@@ -216,10 +217,14 @@ export default {
         onRowScroll(event, options) {
             this.scrollTop = options.scrollTop;
         },
-        nonetChange(value) {
-            let {nonet, stage} = value;
+        nonetChange({nonet, stage}) {
             this.nonet = nonet;
+            this.stageChange(stage);
             this.viewList = new Array(nonet.col * nonet.row).fill('1');
+        },
+        stageChange(stage) {
+            // do something
+            this.stage = stage;
         },
         resetNonet() {
             this.reset = true;

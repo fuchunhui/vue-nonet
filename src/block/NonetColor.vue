@@ -46,8 +46,7 @@ export default {
             cellHeight: 64,
             colCount: 1000,
             rowCount: 1000,
-            viewList: [],
-            stage: ''
+            viewList: []
         };
     },
 
@@ -78,14 +77,8 @@ export default {
     },
 
     methods: {
-        nonetChange({nonet, stage}) {
-            this.viewList = new Array(nonet.col * nonet.row).fill('1');
-            this.stageChange(stage);
-        },
-
-        stageChange(stage) {
-            // do something
-            this.stage = stage;
+        nonetChange({nonet}) {
+            this.viewList = new Array(nonet.col * nonet.row).fill('1');   
         }
     }
 };

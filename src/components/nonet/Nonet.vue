@@ -73,7 +73,6 @@
 import NonetGrid from './NonetGrid';
 import ScrollBar from '../../toolkits/ScrollBar';
 
-let dataTimer;
 let resizeTimer;
 let scrollTimer;
 let resetTimer;
@@ -83,7 +82,8 @@ const NONET_STAGE = {
     SCROLL: 'SCROLL',
     SIZE: 'SIZE',
     RESIZE: 'RESIZE',
-    RESET: 'RESET'
+    RESET: 'RESET',
+    UPDATE: 'UPDATE'
 };
 
 export default {
@@ -253,6 +253,9 @@ export default {
             }
             this.outUpdateScroll = true;
             this.updateScroll(val);
+        },
+        nonet() {
+            this.nonetChange(NONET_STAGE.UPDATE);
         }
     },
 
@@ -391,7 +394,7 @@ export default {
         /**
          * 计算获取数据的起点位置，默认左上角pointer(x,y) =（0,0）位置，以每个小格子为一个坐标单元
          *
-         * 起点，初始(0,0)，当大于临界值时，触发后端请求。
+         * 起点，初始(0,0)，当大于临界值时，触发获取数据请求。
          * 临界值，可视区域的起点和可视行列数，对比九宫格起点坐标和行列数判断。
          * 边界检测，需要同时检测起点和终点。
          *
@@ -466,12 +469,8 @@ export default {
             }
         },
         dynamicData(stage) {
-            this.isScrolling = true;
             this.nonetChange(stage);
-            // clearTimeout(dataTimer);
-            // dataTimer = setTimeout(() => {
-            //     this.nonetChange(stage);
-            // }, 100);
+            this.isScrolling = true;
         },
 
         dealData() {

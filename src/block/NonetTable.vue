@@ -92,14 +92,20 @@ export default {
             this.getNonetData(stage);
         },
         getNonetData(stage) {
-            if (stage === 'INIT') {
-                this.resetData();
-            } else if (stage === 'RESET') {
-                this.getData();
-            } else {
-                if (this.list.length) {
+            switch(stage) {
+                case 'INIT':
+                    this.resetData();
+                    break;
+                case 'RESET':
                     this.getData();
-                }
+                    break;
+                case 'UPDATE':
+                    break;
+                default:
+                    if (this.list.length) {
+                        this.getData();
+                    }
+                    break;
             }
         },
         resetData() {

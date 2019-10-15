@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/fuchunhui/vue-nonet#readme",
   "dependencies": {
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "veui": "^1.0.0-alpha.18",
     "veui-theme-one": "^1.0.0-alpha.18",
     "vue": "^2.5.17"

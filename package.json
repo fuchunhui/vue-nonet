@@ -1,6 +1,6 @@
 {
   "name": "vue-nonet",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "提供一种解决方案，解决大数据量情况的数据渲染性能问题，是基于多维度多层级的九宫格算法。",
   "main": "index.js",
   "scripts": {

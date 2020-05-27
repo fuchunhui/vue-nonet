@@ -1,6 +1,6 @@
 {
   "name": "vue-nonet",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "提供一种解决方案，解决大数据量情况的数据渲染性能问题，是基于多维度多层级的九宫格算法。",
   "main": "index.js",
   "scripts": {
@@ -21,25 +21,25 @@
   "homepage": "https://github.com/fuchunhui/vue-nonet#readme",
   "dependencies": {
     "lodash": "^4.17.15",
-    "veui": "^1.0.0-alpha.31",
-    "veui-theme-one": "^1.0.0-alpha.31",
-    "vue": "^2.6.10"
+    "veui": "^1.0.0-alpha.36",
+    "veui-theme-one": "^1.0.0-alpha.36",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.0",
-    "@vue/cli-plugin-eslint": "^3.12.0",
-    "@vue/cli-service": "^3.12.0",
-    "babel-eslint": "^10.0.3",
+    "@vue/cli-plugin-babel": "^3.12.1",
+    "@vue/cli-plugin-eslint": "^3.12.1",
+    "@vue/cli-service": "^3.12.1",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-lodash": "^3.3.4",
-    "babel-plugin-veui": "^1.0.0-alpha.31",
+    "babel-plugin-veui": "^1.0.0-alpha.36",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
-    "less": "^3.10.3",
+    "less": "^3.11.1",
     "less-loader": "^4.1.0",
-    "perfect-scrollbar": "^1.4.0",
-    "veui-loader": "^1.0.0-alpha.31",
-    "vue-template-compiler": "^2.6.10",
-    "webpack-dev-server": ">=3.1.11"
+    "perfect-scrollbar": "^1.5.0",
+    "veui-loader": "^1.0.0-alpha.36",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-dev-server": "^3.11.0"
   },
   "eslintConfig": {
     "root": true,
